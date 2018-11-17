@@ -113,6 +113,21 @@ public class ThresholdAlerterV2Tests
 		Assert.Equal(callCount, handler.CallCount);
 	}
 
+	[Theory]
+	[InlineData(10, 10)]
+	[InlineData(20, 20)]
+	[InlineData(30, 30)]
+	[InlineData(40, 40)]
+	[InlineData(50, 40)]
+	public void UnsortedThresholds(int value, int expectedThreshold)
+	{
+		int actualThreshold = 0;
+		var alerter = new ThresholdAlerterV2(new[] { 10, 30, 20, 40 });
+		alerter.ThresholdReached += t => actualThreshold = t;
+		alerter.Check(value);
+		Assert.Equal(expectedThreshold, actualThreshold);
+	}
+
     [Fact]
     public void ManyChecks()
     {
