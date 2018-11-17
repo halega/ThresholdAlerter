@@ -4,36 +4,36 @@ using System.Collections.Generic;
 public class ThresholdAlerter
 {
     private SortedSet<int> thresholds;
-    private Dictionary<int, Action<int>> alerts;
-    private int lastThreshold;
+    private Dictionary<int, Action<int>> alertHandlers;
+    private int reachedThreshold;
     private bool started;
 
     public ThresholdAlerter()
     {
         thresholds = new SortedSet<int>();
-        alerts = new Dictionary<int, Action<int>>();
+        alertHandlers = new Dictionary<int, Action<int>>();
     }
 
-    public void Add(int threshold, Action<int> alert)
+    public void Add(int threshold, Action<int> alertHandler)
     {
         if (started)
         {
             throw new Exception("Can't add a new threshold in a working alerter");
         }
         thresholds.Add(threshold);
-        alerts.Add(threshold, alert);
-        lastThreshold = thresholds.Min - 1;
+        alertHandlers.Add(threshold, alertHandler);
+        reachedThreshold = thresholds.Min - 1;
     }
 
     public void Check(int value)
     {
         started = true;
         int threshold = ReachedThreshold(value);
-        if (threshold > lastThreshold)
+        if (threshold > reachedThreshold)
         {
-            alerts[threshold](threshold);
+            alertHandlers[threshold](threshold);
         }
-        lastThreshold = threshold;
+        reachedThreshold = threshold;
     }
 
     private int ReachedThreshold(int value)
