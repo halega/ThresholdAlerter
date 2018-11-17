@@ -17,7 +17,7 @@ public class ThresholdAlerterV2
 
     public void Check(int value)
     {
-        int index = IndexOfMaxReachedThreshold(value);
+        int index = IndexOfReachedThreshold(value);
         if (index > indexOfReachedThreshold)
         {
             OnThresholdReached(thresholds[index]);
@@ -25,7 +25,7 @@ public class ThresholdAlerterV2
         indexOfReachedThreshold = index;
     }
 
-    private int IndexOfMaxReachedThreshold(int value)
+    private int IndexOfReachedThreshold(int value)
     {
         int index = Array.BinarySearch(thresholds, value);
         if (index < 0)
