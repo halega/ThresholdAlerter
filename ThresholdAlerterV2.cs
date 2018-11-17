@@ -5,8 +5,9 @@ using System.Linq;
 public class ThresholdAlerterV2
 {
     private int[] thresholds;
-    public event Action<int> ThresholdReached;
     private int indexOfReachedThreshold;
+    
+    public event Action<int> ThresholdReached;
 
     public ThresholdAlerterV2(IEnumerable<int> thresholds)
     {
@@ -16,7 +17,7 @@ public class ThresholdAlerterV2
 
     public void Check(int value)
     {
-        int index = IndexOfReachedThreshold(value);
+        int index = IndexOfMaxReachedThreshold(value);
         if (index > indexOfReachedThreshold)
         {
             OnThresholdReached(thresholds[index]);
@@ -24,7 +25,7 @@ public class ThresholdAlerterV2
         indexOfReachedThreshold = index;
     }
 
-    private int IndexOfReachedThreshold(int value)
+    private int IndexOfMaxReachedThreshold(int value)
     {
         int index = -1;
         for (int i = 0; i < thresholds.Length && value >= thresholds[i]; i++)
