@@ -104,6 +104,23 @@ public class ThresholdAlerterTests
 		alerter.Check(value);
 		Assert.Equal(callCount, handler.CallCount);
 	}
+
+    [Fact]
+    public void ManyChecks()
+    {
+        var alerter = new ThresholdAlerter();
+        var handler = new HandlerMock();
+        for (int i = 0; i < 1000; i += 10)
+        {
+            alerter.Add(i, handler.AlertHandler);
+        }
+        for (int i = 0; i < 10000; i++)
+        {
+            alerter.Check(i);
+        }
+        Assert.Equal(100, handler.CallCount);
+        Assert.Equal(990, handler.ReachedThreshold);
+    }
 	
     private class HandlerMock
     {
