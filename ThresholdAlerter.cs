@@ -18,7 +18,7 @@ public class ThresholdAlerter
     {
         if (started)
         {
-            throw new Exception("Can't add a new threshold in a working alerter");
+            throw new Exception("Can't add a new threshold to a working alerter");
         }
         thresholds.Add(threshold);
         alertHandlers.Add(threshold, alertHandler);
