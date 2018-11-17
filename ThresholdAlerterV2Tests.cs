@@ -48,8 +48,8 @@ public class ThresholdAlerterV2Tests
 		var alerter = new ThresholdAlerterV2(new[] { 100 });
 		alerter.ThresholdReached += handler.AlertHandler;
 		alerter.Check(0);
-		//alerter.Check(50);
-		//alerter.Check(99);
+		alerter.Check(50);
+		alerter.Check(99);
 		Assert.Equal(0, handler.CallCount);
 	}
 
@@ -96,10 +96,10 @@ public class ThresholdAlerterV2Tests
 
 	[Theory]
 	// Implementation limit: threshold can't be int.MinValue
-	// [InlineData(int.MinValue, int.MinValue, 1)]
-	// [InlineData(int.MaxValue, int.MinValue, 1)]
+	[InlineData(int.MinValue, int.MinValue, 1)]
 	[InlineData(int.MinValue, int.MinValue+1, 0)]
 	[InlineData(int.MinValue, 0, 0)]
+	[InlineData(int.MaxValue, int.MinValue, 1)]
 	[InlineData(int.MaxValue, int.MaxValue, 1)]
 	[InlineData(int.MaxValue, 0, 1)]
 	[InlineData(int.MaxValue, int.MinValue+1, 1)]
