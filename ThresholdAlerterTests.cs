@@ -81,7 +81,7 @@ public class ThresholdAlerterTests
 	public void NoThresholds()
 	{
 		var alerter = new ThresholdAlerter();
-		// No exceptinos
+		// No exceptions
 		alerter.Check(0);
 	}
 
