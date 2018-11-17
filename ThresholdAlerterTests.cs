@@ -4,6 +4,20 @@ using Xunit;
 public class ThresholdAlerterTests
 {
 	[Fact]
+	public void Smoke()
+	{
+		bool alerted = false;
+		var alerter = new ThresholdAlerter();
+		alerter.Add(10, x =>
+		{
+			alerted = true;
+			Assert.Equal(10, x);
+		});
+		alerter.Check(10);
+		Assert.True(alerted);
+	}
+
+	[Fact]
 	public void AlertWhenReachedThreshold()
 	{
 		var handler = new HandlerMock();
