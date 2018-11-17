@@ -95,7 +95,6 @@ public class ThresholdAlerterV2Tests
 	}
 
 	[Theory]
-	// Implementation limit: threshold can't be int.MinValue
 	[InlineData(int.MinValue, int.MinValue, 1)]
 	[InlineData(int.MinValue, int.MinValue+1, 0)]
 	[InlineData(int.MinValue, 0, 0)]
