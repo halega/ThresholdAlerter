@@ -27,10 +27,11 @@ public class ThresholdAlerterV2
 
     private int IndexOfMaxReachedThreshold(int value)
     {
-        int index = -1;
-        for (int i = 0; i < thresholds.Length && value >= thresholds[i]; i++)
+        int index = Array.BinarySearch(thresholds, value);
+        if (index < 0)
         {
-            index = i;
+            index = ~index;
+            index--;
         }
         return index;
     }
